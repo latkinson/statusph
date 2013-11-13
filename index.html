@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        Philippine Mapsource
+    </title>
+
+    <meta charset="utf-8"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <!--Due to issues with rotation REMOVED "width=device-width, height=device-height, " from meta viewport content-->
+    <meta name="viewport"
+          content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi"/>
+
+
+    <!-- turn off any caching -->
+
+    <meta http-equiv="cache-control" content="max-age=0"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="expires" content="0"/>
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+
+    <link rel="stylesheet" href="css/leaflet.css" />
+    <link rel="stylesheet" href="css/reset.css" />
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="css/leaflet.ie.css"/><![endif]-->
+
+    <style>
+
+        #navigation{
+            position: fixed;
+            width: 50%;
+            height: 80px;
+            z-index:3;
+            float: right;
+            right: 0;
+        }
+
+        .navoption {
+            max-width: 20%;
+            min-width: 100px;
+            height:100%;
+            float: right;
+            line-height:80px;
+            text-align: center;
+            color: #e8e8e8;
+            border-left: 1px solid #e8e8e8;
+            z-index: 5;
+            background: #212121;
+            cursor:pointer;
+        }
+
+
+
+
+        #fullform {
+            height:100%;
+            width:100%;
+            background: white;
+            position:absolute;
+            z-index: 4;
+            text-align: center;
+            display: none;
+            opacity:.9;
+        }
+
+        .bigform {
+            width: 100%;
+            height: 20px;
+            text-align: center;
+        }
+
+        .close {
+            width: 100%;
+
+            cursor: pointer;
+        }
+
+        .page {
+           width: 80%;
+            margin: auto;
+        }
+
+        .fakeButton {
+            height: 50px;
+            line-height: 50px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid black;
+            clear: both;
+            margin-top: 3px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+
+        }
+
+
+        #sendButton {
+            width: 100%;
+            height: 100px;
+            background: #212121;
+            color: #e8e8e8;
+            margin: 20px auto;
+            line-height: 100px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div id="fullform">
+
+    <div class="page" id="page2" style="display: none;">
+        <h1 class="closeButton">Close this interface</h1>
+        <p style="">How many people are at your location?</p>
+        <input type="text" value="0" id="heads" style="height:20px;font-size:15pt;"/>
+        <p style="">Contact Email/Phone</p>
+        <input type="text" id="contactinfo" placeholder="Your email" style="height:20px;font-size:15pt;"/>
+        <p style="">What is your name</p>
+        <input type="text" id="name" value="0" style="height:20px;font-size:15pt;"/>
+        <p style="">Information (LIST ALL URGENT INFORMATION):</p>
+        <textarea type="text" value="0" id="information" style="height:90px;font-size:15pt;"></textarea>
+        <div id="sendButton">SEND NOW</div></div>
+    <div class="page" id="page1" style="display: none;">
+        <h1 class="closeButton" data-content="rescue"><u>Close</u></h1>
+    <div class="fakeButton" data-content="Resque Request"><u>Rescue Request</u></div>
+    <div class="fakeButton" data-content="Meeting Point">Meeting Point</div>
+    <div class="fakeButton" data-content="Care Area / Hospital">Care Area / Hospital</div>
+    <div class="fakeButton" data-content="Mobile Reception Aea">Mobile Reception Area</div>
+    <div class="fakeButton" data-content="Internet Access Point">Internet Access Point</div>
+    <div class="fakeButton" data-content="Water & Food">Water/Food</div>
+    </div>
+
+</div>
+<div id="navigation">
+    <div class="navoption" id="addloc" style="display: none;">+</div>
+</div>
+<div id="map" style="width: 100%; height: 100%; z-index: 2;"></div>
+
+<script src="js/leaflet.js"></script>
+<script src="js/socket.io.js"></script>
+
+<script src="js/input/UIHandler.js"></script>
+<script src="js/input/UIDefinitions.js"></script>
+<script src="js/functions.js"></script>
+<script>
+
+    var map = L.map('map').setView([10.77193, 121.02539], 6);
+
+    L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> Hosted by <a href="http://stamimus.net">Staminus Communications</a>, developed and maintained by <a href="http://pimdwitte.com">Pim</a>'
+    }).addTo(map);
+
+
+
+    setInterval(function() {
+
+    }, 2000);
+
+    var currentPos = null;
+    var popup = L.popup();
+
+    function onMapClick(e) {
+        popup
+                .setLatLng(e.latlng)
+                .setContent("" +
+                        "<b>Make sure you are zoomed in enough using your scroll bar. Then click the + sign to add an event here.</b>" +
+                        "<br/><br/><a onclick='openInputArea()' style='cursor:pointer;'>Add Location</a>"
+                )
+                .openOn(map);
+
+       currentPos = (e.latlng.toString());
+        transform(document.getElementById("addloc"), "display", "block");
+
+    }
+
+    map.on('click', onMapClick);
+
+</script>
+
+
+</body>
+</html>
