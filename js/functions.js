@@ -9,6 +9,10 @@ var app = {
     }
 }
 
+function urldecode(str) {
+    return decodeURIComponent((str+'').replace(/\+/g, '%20'));
+}
+
 var transform = function (element, name, value) {
     element.style[name] = value;
 }
@@ -17,6 +21,7 @@ window.onload = function() {
     app.initialize();
     IOConnection.serverConnection("69.197.35.54", 9092);
     alert("Add locations by clicking on location on the map");
+
 };
 
 
@@ -42,8 +47,9 @@ function sendDetails() {
     sendObject.push(currentPos);
     sendObject.push(document.getElementById("name").value);
     sendObject.push(document.getElementById("heads").value);
-    sendObject.push(document.getElementById("information").value);
     sendObject.push(document.getElementById("contactinfo").value);
+    sendObject.push(document.getElementById("information").value);
+
     console.log(sendObject);
     ioc.send(JSON.stringify(sendObject));
     closeInputArea();
@@ -67,18 +73,20 @@ var IOConnection = {
 
             });
             ioc.on('addloc', function(data) {
-              console.log(data);
+                data = urldecode(data);
                 var ar = data.split(",");
+                if(ar[2] != 100 && ar[3] != 100){
                 console.log(ar[2] + "," + ar[3]);
                 L.marker([[ar[2]],ar[3]]).addTo(map)
                     .bindPopup(
-                        "Type:" + ar[1] +
+                        "<b>Type:</b> " + ar[1] +
                         "<br/>By: " + ar[4] +
                         "<br/>Info: " + ar[5] +
                         "<br/>Contact: " + ar[6] +
                         "<br/>People: " + ar[7]
                     )
                     .openPopup();
+                }
 
             });
             ioc.on('error', function(data) {

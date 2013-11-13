@@ -18,6 +18,13 @@ function UIDefinitions() {
                     openInputArea();
                 }
             },
+
+            "addmy": {
+                release: function(e){
+                    getLocation();
+
+                }
+            },
             "sendButton": {
                 release: function (e) {
                     sendDetails();
