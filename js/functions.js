@@ -73,19 +73,23 @@ var IOConnection = {
 
             });
             ioc.on('addloc', function(data) {
-                data = urldecode(data);
+                //data = urldecode(data);
                 var ar = data.split(",");
-                if(ar[2] != 100 && ar[3] != 100){
+
+                if(ar[2] != 100 && ar[3] != 100 && ar.length === 8 && ar[6].length > 2){
                 console.log(ar[2] + "," + ar[3]);
                 L.marker([[ar[2]],ar[3]]).addTo(map)
                     .bindPopup(
-                        "<b>Type:</b> " + ar[1] +
-                        "<br/>By: " + ar[4] +
-                        "<br/>Info: " + ar[5] +
-                        "<br/>Contact: " + ar[6] +
-                        "<br/>People: " + ar[7]
+                        "<br/><b>Type:</b>  " + ar[1] +
+                        "<br/><b>Name:</b>  " + ar[4] +
+                        "<br/><b>Info:</b><br/> " + ar[5] +
+                        "<br/><b>Contact:</b><br/>  " + ar[6] +
+                        "<br/><b>Amount of people:</b> " + ar[7]
                     )
                     .openPopup();
+                }else{
+
+                    console.log(data);
                 }
 
             });

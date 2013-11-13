@@ -14,7 +14,9 @@
 
 
     <!-- turn off any caching -->
-
+    <meta name="description" content="Location CrowdSourcing application, find necessities near you, request help, make information public">
+    <meta name="keywords" content="Philippines, crowdsourcing, location information, help me, help now, find help, request help, help">
+    <meta name="author" content="Pim de Witte">
     <meta http-equiv="cache-control" content="max-age=0"/>
     <meta http-equiv="cache-control" content="no-cache"/>
     <meta http-equiv="expires" content="0"/>
@@ -23,6 +25,7 @@
 
     <link rel="stylesheet" href="css/leaflet.css" />
     <link rel="stylesheet" href="css/reset.css" />
+    <link href='/statusph/favicon.ico' rel='shortcut icon' type='image/x-icon'/>
     <!--[if lte IE 8]>
     <link rel="stylesheet" href="css/leaflet.ie.css"/><![endif]-->
 
@@ -116,11 +119,11 @@
         <p style="">How many people are at your location?</p>
         <input type="text" value="0" id="heads" style="height:20px;font-size:15pt;"/>
         <p style="">Contact Email/Phone</p>
-        <input type="text" id="contactinfo" placeholder="Your email" style="height:20px;font-size:15pt;"/>
+        <input type="text" id="contactinfo" placeholder="Your email" value="Details" style="height:20px;font-size:15pt;"/>
         <p style="">What is your name</p>
-        <input type="text" id="name" value="0" style="height:20px;font-size:15pt;"/>
+        <input type="text" id="name" value="Name" style="height:20px;font-size:15pt;"/>
         <p style="">Information (ENTER EXACT ADDRESS):</p>
-        <textarea type="text" value="0" id="information" style="height:90px;font-size:15pt;"></textarea>
+        <textarea type="text" value="0" id="information" style="height:90px;font-size:15pt;">Information</textarea>
         <div id="sendButton">SEND NOW</div></div>
     <div class="page" id="page1" style="display: none;">
         <h1 class="closeButton" data-content="rescue"><u>Close</u></h1>
@@ -138,6 +141,7 @@
 <div id="navigation">
     <div class="navoption" id="addloc" style="display: none;">+</div>
     <div class="navoption" id="addmy" style="display: block;">USE MY LOC</div>
+    <a href="mainpage.html"><div class="navoption" id="oreinfo" style="display: block;">MORE INFO</div></a>
 </div>
 <div id="map" style="width: 100%; height: 100%; z-index: 2;"></div>
 
