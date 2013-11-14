@@ -87,15 +87,10 @@
 
         .fakeButton {
             height: 50px;
-            line-height: 50px;
-            width: 100%;
+            width: 100px;
+            float:left;
+            border:1px solid black;
             text-align: center;
-            border: 1px solid black;
-            clear: both;
-            margin-top: 3px;
-            -webkit-border-radius: 3px;
-            -moz-border-radius: 3px;
-            border-radius: 3px;
 
         }
 
@@ -116,13 +111,16 @@
 
     <div class="page" id="page2" style="display: none;">
         <h1 class="closeButton">Close this interface</h1>
-        <p style="">How many people are at your location?</p>
+        <p style="">HOW MANY PEOPLE?</p>
         <input type="text" value="0" id="heads" style="height:20px;font-size:15pt;"/>
-        <p style="">Contact Email/Phone</p>
-        <input type="text" id="contactinfo" placeholder="Your email" value="Details" style="height:20px;font-size:15pt;"/>
-        <p style="">What is your name</p>
+        <p style="">GEOLOCATION (<a target="blank" href="http://mygeoposition.com/">New Address</a>)</p>
+        <input type="text" value="" id="geolocation" style="height:20px;font-size:15pt;"/>
+        <p style="">IMAGE URL</p>
         <input type="text" id="name" value="Name" style="height:20px;font-size:15pt;"/>
-        <p style="">Information (ENTER EXACT ADDRESS):</p>
+        <p style="">CONTACT INFO + ADDRESS</p>
+        <input type="text" id="contactinfo" placeholder="Your email" value="Details" style="height:20px;font-size:15pt;"/>
+
+        <p style="">Information:</p>
         <textarea type="text" value="0" id="information" style="height:90px;font-size:15pt;">Information</textarea>
         <div id="sendButton">SEND NOW</div></div>
     <div class="page" id="page1" style="display: none;">
@@ -133,21 +131,21 @@
     <div class="fakeButton" data-content="Mobile Reception Aea">Mobile Reception Area</div>
     <div class="fakeButton" data-content="Internet Access Point">Internet Access Point</div>
     <div class="fakeButton" data-content="Water & Food">Water/Food</div>
-        <input class="bigform" placeholder="Request Other" id="request" style="height:50px;"onkeyup="document.getElementById('other').innerHTML = document.getElementById('request').value;document.getElementById('other').setAttribute('data-content', document.getElementById('request').value)"/>
-        <div class="fakeButton" data-content="" id="other">Type in the bar above to request a location</div>
+        <input class="bigform" placeholder="Request Other" id="request" style="height:50px;" onkeyup="document.getElementById('other').innerHTML = document.getElementById('request').value;document.getElementById('other').setAttribute('data-content', document.getElementById('request').value)"/>
+        <div class="fakeButton" data-content="" id="other">CUSTOM(TYPE IN BAR)</div>
     </div>
 
 </div>
 <div id="navigation">
-    <div class="navoption" id="addloc" style="display: none;">+</div>
-    <div class="navoption" id="addmy" style="display: block;">FIND ME</div>
 
-    <a href="api.html"><div class="navoption" id="oreinfo" style="display: block;">API</div></a>
-    <a href="filter.html"><div class="navoption" id="textg" style="display: block;">FILTER</div></a>
-    <a href="text.html"><div class="navoption" id="filterg" style="display: block;">TEXT</div></a>
-    <a href="https://www.youtube.com/watch?v=E1FUiJQXf5w" target="_blank"><div class="navoption" id="video" style="display: block;">video</div></a>
-    <a href="http://twitter.com/statusphdotnet" target="_blank"><div class="navoption" id="TW" style="display: block;">twitter</div></a>
-</div>
+
+
+    <a href="filter.html" id="filterurl"><div class="navoption" id="filter" style="display: block;">FILTER</div></a>
+
+    <a href="redirect.html"><div class="navoption" id="findwater" style="display: block;">WATER</div></a>
+    <a href="redirect.html"><div class="navoption" id="findfood" style="display: block;">FOOD</div></a>
+    <div class="navoption" id="addloc" style="display: block;">ADD</div>
+    <div class="navoption" id="addmy" style="display: block;">FIND ME</div></div>
 <div id="map" style="width: 100%; height: 100%; z-index: 2;"></div>
 
 <script src="js/leaflet.js"></script>
@@ -163,11 +161,12 @@
 
     L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
         maxZoom: 18,
-        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com" target="_blank">CloudMade</a> Hosted by <a href="https://www.staminus.net/" target="_blank">Staminus Communications</a>, developed and maintained by <a href="http://pimdwitte.com" target="_blank">Pim</a>'
+        attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors Hosted by <a href="https://www.staminus.net/" target="_blank">Staminus Communications</a>, developed and maintained by <a href="http://pimdwitte.com" target="_blank">Pim</a> Built at the <a href="http://geekli.st" target="blank">Geeklist</a> #hack4good for Philippines |  <a href="api.html">API</a><a href="text.html"> | TEXT</a><a href="https://www.youtube.com/watch?v=E1FUiJQXf5w" target="_blank"> | Video</a><a href="http://twitter.com/statusphdotnet" target="_blank"> | Twitter</a>'
     }).addTo(map);
 
 
     var currentPos = null;
+    currentPos = "LatLng(10, 100)";
     var popup = L.popup();
 
 
