@@ -25,9 +25,18 @@
 
     <link rel="stylesheet" href="css/leaflet.css" />
     <link rel="stylesheet" href="css/reset.css" />
-    <link href='/statusph/favicon.ico' rel='shortcut icon' type='image/x-icon'/>
+
+
+    <!--<link href='favicon.ico' rel='shortcut icon' type='image/x-icon'/>-->
+    <link rel="icon" href="favicon.png?3">
+    <!--[if IE]><link rel="shortcut icon" href="favicon.ico?3"><![endif]-->
+
+
+
+
     <!--[if lte IE 8]>
     <link rel="stylesheet" href="css/leaflet.ie.css"/><![endif]-->
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
 
     <style>
 
@@ -107,6 +116,12 @@
     </style>
 </head>
 <body>
+
+<header class="container">
+    <h1 class="logo"><a href="http://statusph.net/" rel="nofollow">StatusPH</a></h1>
+</header>
+
+
 <div id="fullform">
 
     <div class="page" id="page2" style="display: none;">
@@ -137,15 +152,13 @@
 
 </div>
 <div id="navigation">
-
-
-
     <a href="filter.html" id="filterurl"><div class="navoption" id="filter" style="display: block;">FILTER</div></a>
-
     <a href="redirect.html"><div class="navoption" id="findwater" style="display: block;">WATER</div></a>
     <a href="redirect.html"><div class="navoption" id="findfood" style="display: block;">FOOD</div></a>
     <div class="navoption" id="addloc" style="display: block;">ADD</div>
-    <div class="navoption" id="addmy" style="display: block;">FIND ME</div></div>
+    <div class="navoption" id="addmy" style="display: block;">FIND ME</div>
+</div>
+
 <div id="map" style="width: 100%; height: 100%; z-index: 2;"></div>
 
 <script src="js/leaflet.js"></script>
